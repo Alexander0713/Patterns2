@@ -23,19 +23,11 @@ public class DataHelper {
     private static final Faker faker = new Faker(new Locale("en"));
 
     public static AuthInfo getActiveUser() {
-        String login = faker.name().username();
-        String password = faker.internet().password();
-        RegistrationDto user = new RegistrationDto(login, password, "active");
-        sendCreateUserRequest(user);
-        return new AuthInfo(login, password);
+        return createUser("active");
     }
 
     public static AuthInfo getBlockedUser() {
-        String login = faker.name().username();
-        String password = faker.internet().password();
-        RegistrationDto user = new RegistrationDto(login, password, "blocked");
-        sendCreateUserRequest(user);
-        return new AuthInfo(login, password);
+        return createUser("blocked");
     }
 
     public static AuthInfo getNonExistentUser() {
@@ -48,6 +40,14 @@ public class DataHelper {
 
     public static AuthInfo getUserWithInvalidPassword(AuthInfo validUser) {
         return new AuthInfo(validUser.getLogin(), faker.internet().password());
+    }
+
+    private static AuthInfo createUser(String status) {
+        String login = faker.name().username();
+        String password = faker.internet().password();
+        RegistrationDto user = new RegistrationDto(login, password, status);
+        sendCreateUserRequest(user);
+        return new AuthInfo(login, password);
     }
 
     private static void sendCreateUserRequest(RegistrationDto user) {

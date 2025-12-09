@@ -10,12 +10,6 @@ public class AuthTest {
 
     @BeforeEach
     void setUp() {
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--no-sandbox");
-        options.addArguments("--disable-dev-shm-usage");
-        options.addArguments("--headless");
-        Configuration.browserCapabilities = options;
-        Configuration.browserSize = "1280x800";
 
         open("http://localhost:9999");
     }
